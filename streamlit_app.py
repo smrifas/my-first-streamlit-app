@@ -404,3 +404,118 @@ ip domain-name {domain}
         file_name=f"{hostname}_final_delivery.txt",
         mime="text/plain"
     )
+    # ==========================================================
+    # PACKET TRACER AUTOMATION MODULE
+    # ==========================================================
+
+    st.subheader("🤖 Packet Tracer Automated Deployment Module")
+
+    st.write("""
+    Pro-Project Feature: Instead of manual copy-pasting, download the companion
+    automation wrapper below.
+
+    Running this localized Python block will stream the active configuration
+    directly into your active Packet Tracer environment via its external CLI
+    engine loop.
+    """)
+
+    automation_script_template = f"""# ====================================================================
+#  AUTOMATED PACKET TRACER BATCH INTERCONNECT BRIDGE
+#  Generated via NetOps Enterprise Architect Engine
+# ====================================================================
+
+import socket
+import time
+import sys
+
+
+def stream_config_to_simulator(host="127.0.0.1", port=59000):
+
+    config_payload = r'''{script}'''
+
+    print(f"[*] Initializing connection pipeline to Packet Tracer Core at {{host}}:{{port}}...")
+
+    s = None
+
+    try:
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(5)
+        s.connect((host, port))
+
+        print("[+] Interprocess Pipeline established. Beginning configuration streaming sequence...")
+        time.sleep(1)
+
+        lines = config_payload.splitlines()
+
+        for idx, line in enumerate(lines, 1):
+
+            clean_line = line.strip()
+
+            if clean_line.startswith("!") or clean_line.startswith("#"):
+                continue
+
+            if clean_line:
+
+                print(f"   [{{idx}}/{{len(lines)}}] Injecting: {{clean_line}}")
+
+                s.sendall(
+                    clean_line.encode("ascii", errors="ignore") + b"\\n"
+                )
+
+                time.sleep(0.15)
+
+        print("\\n[============== DEPLOYMENT STATUS ==============]")
+        print("[✅] All CLI configuration rows streamed successfully!")
+        print("[================================================]")
+
+    except socket.timeout:
+        print("\\n[❌] Error: Connection timed out.")
+
+    except ConnectionRefusedError:
+        print("\\n[❌] Error: Connection refused by target host.")
+
+    except Exception as e:
+        print(f"\\n[❌] Critical Runtime Error: {{e}}")
+
+    finally:
+        if s:
+            s.close()
+
+
+if __name__ == "__main__":
+
+    print("=================================================================")
+    print(" ENTERPRISE NETOPS PACKET TRACER CONTROLLER ENGINE ")
+    print("=================================================================")
+
+    target_port = 59000
+
+    if len(sys.argv) > 1:
+
+        try:
+            target_port = int(sys.argv[1])
+
+        except ValueError:
+            print("[!] Warning: Invalid port arg. Defaulting to 59000.")
+
+    stream_config_to_simulator(port=target_port)
+"""
+
+    btn_col1, btn_col2 = st.columns(2)
+
+    with btn_col1:
+        st.download_button(
+            label=f"📥 Download Static CLI Template ({vendor})",
+            data=script,
+            file_name=f"{hostname}_config.txt",
+            mime="text/plain"
+        )
+
+    with btn_col2:
+        st.download_button(
+            label="⚡ Download Packet Tracer Execution Bridge (.py)",
+            data=automation_script_template,
+            file_name="deploy_to_pt.py",
+            mime="text/x-python"
+        )
